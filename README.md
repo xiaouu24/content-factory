@@ -96,6 +96,93 @@ From a single product input, the agent collective generates:
 - Visual pipeline: Art Director proposes assets; Image Maker calls your T2I API and adds alt text
 - Extended contracts: `images` array + persona-specific social posts
 
+## 🛠️ Tech Stack
+
+### Core Technologies
+
+**Language & Framework**
+- **Python 3.11+** - Modern Python with type hints and async support
+- **FastAPI** - High-performance async web framework with automatic OpenAPI docs
+- **Uvicorn** - Lightning-fast ASGI server for production deployment
+
+**AI & Agent Infrastructure**
+- **OpenAI Agent SDK** - Official SDK for building and orchestrating AI agents
+- **GPT-4o** - Latest OpenAI model for content generation
+- **Structured Outputs** - Deterministic JSON responses via Pydantic schemas
+
+### Key Libraries & Dependencies
+
+**Data Validation & Modeling**
+- **Pydantic v2** - Data validation using Python type annotations
+- **YAML** - Configuration management for style guides and settings
+
+**HTTP & API Integration**
+- **httpx** - Async HTTP client for external API calls
+- **python-dotenv** - Environment variable management
+
+**Content Processing**
+- **Markdown** - Blog post formatting and rendering
+- **JSON** - Structured data exchange format
+
+### Architecture Components
+
+**1. Agent System** (`agents_setup.py`)
+- Utilizes OpenAI's Agent SDK for agent creation and management
+- Each agent has specialized instructions and tools
+- Supports both sync and async execution patterns
+
+**2. Content Contracts** (`content_contracts.py`)
+- Pydantic models ensure type safety and validation
+- Structured schemas for all content types
+- Automatic serialization/deserialization
+
+**3. Tool Integration** (`tools.py`)
+- Custom tools for URL shortening (Bitly integration)
+- Image generation API wrapper
+- Quickstart code generation
+- Alt text generation for accessibility
+
+**4. Guardrails System** (`guardrails.py`)
+- Input sanitization and validation
+- Output quality checks
+- Content safety filters
+- Creator tone enforcement
+
+**5. Controller** (`controller.py`)
+- Deterministic agent orchestration
+- Error handling and retry logic
+- Response packaging and formatting
+
+**6. API Layer** (`app.py`)
+- RESTful endpoints with FastAPI
+- Automatic request/response validation
+- Built-in API documentation at `/docs`
+
+### External Integrations
+
+**Required**
+- **OpenAI API** - Powers all agent intelligence
+
+**Optional**
+- **Bitly API** - URL shortening for social posts
+- **Text-to-Image API** - Custom image generation endpoint
+- **CMS Webhook** - Content publishing automation
+- **Buffer/Hootsuite** - Social media scheduling (ready to integrate)
+
+### Development Tools
+
+- **Virtual Environment** - Isolated Python dependencies
+- **Hot Reload** - Automatic server restart on code changes
+- **Type Hints** - Enhanced IDE support and error detection
+- **Environment Variables** - Secure configuration management
+
+### Performance & Scalability
+
+- **Async/Await** - Non-blocking I/O for concurrent requests
+- **Connection Pooling** - Efficient API connection management
+- **Stateless Design** - Horizontal scaling ready
+- **Docker Ready** - Containerization support (Dockerfile can be added)
+
 ## Quick start
 
 ```bash
