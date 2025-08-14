@@ -96,6 +96,44 @@ From a single product input, the agent collective generates:
 - Visual pipeline: Art Director proposes assets; Image Maker calls your T2I API and adds alt text
 - Extended contracts: `images` array + persona-specific social posts
 
+## 🧠 ChromaDB Vector Store Integration
+
+The Content Factory now includes a powerful ChromaDB vector store that enhances agent performance through:
+
+### Vector Store Features
+- **Semantic Memory** - Agents remember and learn from all generated content
+- **Knowledge Base RAG** - Ground responses in verified documentation
+- **Duplicate Detection** - Prevent repetitive content with similarity checking
+- **Performance Learning** - Track metrics and learn from successful content
+- **Style Consistency** - Maintain brand voice through example-based learning
+
+### Collections
+- `content_history` - All generated content with embeddings
+- `knowledge_base` - Product documentation and specifications  
+- `style_examples` - High-performing content templates
+- `brand_assets` - Visual themes and prompts
+- `performance_metrics` - Content analytics and feedback
+
+### How It Works
+1. **Before Generation**: Agents retrieve relevant context from past content and knowledge base
+2. **During Generation**: Check for duplicates and apply learned style patterns
+3. **After Generation**: Store content and embeddings for future reference
+4. **Continuous Learning**: Track performance and promote successful content to examples
+
+### Quick Setup
+```bash
+# Install dependencies including ChromaDB
+pip install -r requirements.txt
+
+# Initialize vector store with sample data
+python migrations/init_chromadb.py
+
+# Start the enhanced server
+uvicorn app:app --reload --port 8000
+```
+
+See [CHROMADB_USAGE.md](./CHROMADB_USAGE.md) for detailed usage instructions.
+
 ## 🛠️ Tech Stack
 
 ### Core Technologies
@@ -109,6 +147,8 @@ From a single product input, the agent collective generates:
 - **OpenAI Agent SDK** - Official SDK for building and orchestrating AI agents
 - **GPT-4o** - Latest OpenAI model for content generation
 - **Structured Outputs** - Deterministic JSON responses via Pydantic schemas
+- **ChromaDB** - Vector database for semantic search and content memory
+- **OpenAI Embeddings** - text-embedding-3-small for vector generation
 
 ### Key Libraries & Dependencies
 
@@ -188,12 +228,17 @@ From a single product input, the agent collective generates:
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-export OPENAI_API_KEY=...   # required for Agent SDK
+export OPENAI_API_KEY=...   # required for Agent SDK and embeddings
+
+# Initialize ChromaDB vector store (recommended)
+python migrations/init_chromadb.py
+
 # Optional:
 # export BITLY_TOKEN=...     # URL shortener
 # export CMS_WEBHOOK=...     # your CMS webhook
 # export IMG_BASE_URL=...    # your T2I endpoint base
 # export IMG_MODEL=...       # your default T2I model id
+
 uvicorn app:app --reload --port 8000
 ```
 
@@ -214,13 +259,22 @@ If `schedule_iso` is provided, a best-effort publish stub is invoked (replace wi
 
 ## Files
 
+### Core Files
 - `style_guide.yaml` – brand voice, creator-mode rules, visual cues
 - `content_contracts.py` – Pydantic models for structured outputs (incl. images)
 - `tools.py` – UTM/shorten, Quickstarts, **generate_brand_image** + **suggest_alt_text**
 - `guardrails.py` – input/output checks, creator tone constraints
 - `agents_setup.py` – Planner, Blog Writer, X Dev Writer, **X Creator Writer**, LinkedIn Writer, **Art Director**, **Image Maker**, Editor
 - `controller.py` – deterministic orchestration, guardrails, packaging
-- `app.py` – FastAPI wrapper exposing `/content-package`
+- `app.py` – FastAPI wrapper exposing multiple endpoints
+
+### ChromaDB Integration Files (New)
+- `vector_store.py` – ChromaDB client and collection management
+- `embeddings.py` – OpenAI embedding generation and caching
+- `retrieval.py` – RAG implementation for agent context
+- `analytics.py` – Performance tracking and learning system
+- `migrations/init_chromadb.py` – Database initialization script
+- `CHROMADB_USAGE.md` – Detailed usage documentation
 
 ## Notes
 - Tracing & tool wiring follow the OpenAI Agent SDK patterns.
