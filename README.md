@@ -1,15 +1,100 @@
 # Multi-Agent Content Factory v2 (OpenAI Agent SDK)
 
-A production-oriented starter that turns a single **product input** into:
-- a technical **blog** (Markdown),
-- **X/Twitter** posts (developer + creator friendly),
-- **LinkedIn** posts, and
-- **on-brand images** (blog hero, X card, LinkedIn hero) via your text-to-image API.
+A production-oriented starter that transforms a single **product input** into a comprehensive content package using specialized AI agents.
 
-**What’s new in v2**
-- Creator-friendly X posts (`x_creator_writer`) with hooks-first, ≤2 lines, ≤1 emoji.
-- Visual pipeline: `art_director` proposes assets; `image_maker` calls your T2I API and adds alt text.
-- Extended contracts: `images` array + persona-specific social posts.
+## 🤖 Agent Architecture & Capabilities
+
+This system leverages **8 specialized agents** working in orchestrated harmony, each with distinct expertise and responsibilities:
+
+### Agent Roster & Capabilities
+
+1. **📋 Planner Agent**
+   - Analyzes product input and creates strategic content roadmap
+   - Determines key messaging, target audiences, and content angles
+   - Outputs structured brief for downstream agents
+
+2. **✍️ Blog Writer Agent**
+   - Generates comprehensive technical blog posts (1500+ words)
+   - Structures content with SEO-optimized headings
+   - Includes code examples, diagrams references, and CTAs
+   - Outputs clean Markdown format
+
+3. **💻 X Developer Writer Agent**
+   - Creates developer-focused Twitter/X posts
+   - Emphasizes technical benefits and features
+   - Optimizes for engagement with relevant hashtags
+   - Maintains 280-character limit
+
+4. **🎨 X Creator Writer Agent** *(New in v2)*
+   - Generates creator-friendly, hook-first X posts
+   - Uses conversational tone with minimal emojis (≤1)
+   - Focuses on benefits over features
+   - Structures posts in ≤2 lines for maximum impact
+
+5. **💼 LinkedIn Writer Agent**
+   - Produces professional LinkedIn posts
+   - Balances technical depth with business value
+   - Includes strategic hashtags and mentions
+   - Optimizes for LinkedIn's algorithm
+
+6. **🎨 Art Director Agent** *(New in v2)*
+   - Designs visual content strategy
+   - Creates detailed image briefs and prompts
+   - Ensures brand consistency across visuals
+   - Specifies dimensions and styles for each platform
+
+7. **🖼️ Image Maker Agent** *(New in v2)*
+   - Interfaces with text-to-image APIs
+   - Generates on-brand images based on Art Director briefs
+   - Creates accessibility-focused alt text
+   - Produces platform-specific visuals (blog hero, X card, LinkedIn hero)
+
+8. **📝 Editor Agent**
+   - Reviews and refines all content
+   - Ensures consistency across outputs
+   - Validates against style guide and guardrails
+   - Final quality assurance pass
+
+### How Agents Collaborate
+
+```mermaid
+graph LR
+    Input[Product Input] --> Planner
+    Planner --> Blog[Blog Writer]
+    Planner --> XDev[X Dev Writer]
+    Planner --> XCreator[X Creator Writer]
+    Planner --> LinkedIn[LinkedIn Writer]
+    Planner --> ArtDir[Art Director]
+    ArtDir --> ImageMaker[Image Maker]
+    Blog --> Editor
+    XDev --> Editor
+    XCreator --> Editor
+    LinkedIn --> Editor
+    ImageMaker --> Editor
+    Editor --> Output[Content Package]
+```
+
+### Key Agent Features
+
+- **Specialized Expertise**: Each agent is fine-tuned for specific content types and platforms
+- **Structured Output**: Agents follow Pydantic contracts for consistent, validated outputs
+- **Style Adaptation**: Agents reference `style_guide.yaml` for brand voice consistency
+- **Tool Integration**: Agents can leverage external tools (URL shorteners, image APIs, quickstart generators)
+- **Guardrails Compliance**: All outputs pass through safety and quality checks
+- **Deterministic Orchestration**: Controller ensures reliable, sequential execution
+
+## What It Produces
+
+From a single product input, the agent collective generates:
+- **Technical blog** (1500+ words, Markdown format)
+- **X/Twitter posts** (both developer and creator personas)
+- **LinkedIn posts** (professional, value-focused)
+- **On-brand images** (blog hero, X card, LinkedIn hero) via your text-to-image API
+
+**What's new in v2**
+- Creator-friendly X posts with hooks-first approach, ≤2 lines, ≤1 emoji
+- Visual pipeline: Art Director proposes assets; Image Maker calls your T2I API and adds alt text
+- Extended contracts: `images` array + persona-specific social posts
 
 ## Quick start
 
