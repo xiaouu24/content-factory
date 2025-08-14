@@ -1,0 +1,71 @@
+brand:
+  name: YourBrand Multimodal
+  audiences:
+    - "Individual developers (indie hackers, creators)"
+    - "Enterprise developers & solution architects"
+    - "Technical PMs evaluating AI APIs"
+    - "Creators (video editors, marketers, indie creators)"
+  tone:
+    - "Developer-first for docs/blog"
+    - "Creator-friendly for social"
+    - "Credible, specific, no hype"
+    - "Security- and performance-aware"
+  banned_phrases:
+    - "revolutionary"
+    - "game-changing"
+    - "magical"
+    - "100% guaranteed"
+    - "state-of-the-art"
+    - "best-in-class"
+    - "SOTA"
+    - "no hallucinations"
+    - "perfectly safe"
+  preferences:
+    blog:
+      target_words: 1500
+      structure:
+        - "Intro: customer pain (scale content for T2I/T2V)"
+        - "Model overview (when to use which)"
+        - "API quickstarts (Python & JS)"
+        - "Latency & cost examples"
+        - "Quality metrics (CLIPScore/FID/FVD)"
+        - "Integration patterns (batch, async)"
+        - "Responsible AI & safety"
+        - "CTAs"
+    linkedin:
+      hash_count: 3-5
+      link_policy: "link in comments optional"
+      enterprise_emphasis:
+        - "SLA & priority support"
+        - "SSO/SAML, SOC2, GDPR"
+        - "Data control options"
+    x:
+      max_variants: 5
+      hash_count: 2
+      include:
+        - "one-liner benefit for devs"
+        - "link to demo or docs"
+      creator_mode:
+        tone:
+          - "friendly, vivid, less technical"
+          - "hooks first, value in one line"
+          - "light emoji allowed (≤1)"
+        format:
+          - "1–2 short lines max"
+          - "no jargon"
+          - "CTA to try or watch"
+  visuals:
+    palette: ["#101418", "#1C64F2", "#22C55E", "#F59E0B", "#F3F4F6"]
+    imagery:
+      style_tags: ["clean lighting", "cinematic", "soft gradients", "crisp UI overlays"]
+      avoid: ["busy backgrounds", "hard shadows on text", "illegible overlays"]
+    logo_lockup:
+      safe_area: "12px"
+      corner: "top-right"
+  legal:
+    prohibited_claims:
+      - "future financial performance"
+      - "health/medical efficacy"
+      - "deceptive benchmarks"
+      - "customer names without approval"
+      - "benchmark superiority without public citation"
