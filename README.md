@@ -43,6 +43,25 @@ Visit `http://localhost:8000/docs` for interactive API documentation.
 | **Image Maker** | Generates images via your T2I API |
 | **Editor** | Quality control and consistency |
 
+### Agent Flow
+
+```mermaid
+graph LR
+    Input[Product Input] --> Planner
+    Planner --> Blog[Blog Writer]
+    Planner --> XDev[X Dev Writer]
+    Planner --> XCreator[X Creator Writer]
+    Planner --> LinkedIn[LinkedIn Writer]
+    Planner --> ArtDir[Art Director]
+    ArtDir --> ImageMaker[Image Maker]
+    Blog --> Editor
+    XDev --> Editor
+    XCreator --> Editor
+    LinkedIn --> Editor
+    ImageMaker --> Editor
+    Editor --> Output[Content Package]
+```
+
 ## 🔑 Key Features
 
 - **🧠 Vector Memory** - ChromaDB stores and learns from all content ([details](./CHROMADB_USAGE.md))
