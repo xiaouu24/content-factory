@@ -1,5 +1,6 @@
 from pydantic import BaseModel, HttpUrl, Field
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Dict, Any
+from datetime import datetime
 
 class ContentBrief(BaseModel):
     product_name: str
@@ -20,6 +21,10 @@ class ContentBrief(BaseModel):
     compliance: List[str] = ["SOC 2", "GDPR"]
     visual_theme: Optional[str] = "cinematic, clean UI overlays"
     canonical_url: Optional[HttpUrl] = None
+    # Vector store metadata
+    generated_at: Optional[datetime] = Field(default_factory=datetime.now)
+    vector_id: Optional[str] = None
+    similarity_score: Optional[float] = None
 
 class BlogArticle(BaseModel):
     title: str
@@ -27,6 +32,11 @@ class BlogArticle(BaseModel):
     meta_description: str
     word_count_target: int = Field(default=1500)
     body_markdown: str
+    # Analytics metadata
+    actual_word_count: Optional[int] = None
+    readability_score: Optional[float] = None
+    vector_id: Optional[str] = None
+    performance_metrics: Optional[Dict[str, Any]] = None
 
 class SocialPost(BaseModel):
     platform: Literal["x", "linkedin"]
@@ -35,6 +45,9 @@ class SocialPost(BaseModel):
     suggested_hashtags: List[str]
     link_handling: str   # e.g., "add UTM", "link-in-comments"
     asset_refs: List[str] = []  # IDs or URLs for images to attach
+    # Performance tracking
+    variant_ids: Optional[List[str]] = None  # Vector store IDs for each variant
+    engagement_predictions: Optional[Dict[str, float]] = None
 
 class ImageAsset(BaseModel):
     usage: Literal["blog_hero", "x_card", "linkedin_hero", "generic_social"]
@@ -48,6 +61,9 @@ class ImageAsset(BaseModel):
     alt_text: Optional[str] = None
     width: Optional[int] = None
     height: Optional[int] = None
+    # Vector store metadata
+    prompt_embedding_id: Optional[str] = None
+    visual_similarity_score: Optional[float] = None
 
 class Package(BaseModel):
     brief: ContentBrief
@@ -56,3 +72,9 @@ class Package(BaseModel):
     x_posts_creator: SocialPost
     linkedin_posts: SocialPost
     images: List[ImageAsset]
+    # Package metadata for tracking
+    package_id: Optional[str] = None
+    created_at: Optional[datetime] = Field(default_factory=datetime.now)
+    total_content_pieces: Optional[int] = None
+    vector_store_ids: Optional[Dict[str, str]] = None  # Mapping of content type to vector IDs
+    performance_tracking: Optional[Dict[str, Any]] = None
